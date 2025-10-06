@@ -1,25 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" th:fragment="parent(content,title)" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:fragment="parent(content,title)" xmlns:th="http://www.thymeleaf.org" class="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:replace="${title}">Document</title>
     <link rel="stylesheet" th:href="@{/css/output.css}">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <script>
+  if (
+    localStorage.getItem('color-theme') === 'dark' ||
+    (!('color-theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
+  ) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+</script>
+
 </head>
+
 <body>
-    
+
     <!-- navbar -->
     <div th:replace="navbar :: navbar"></div>
-    
+
     <!-- main content -->
     <div class="p-4">
         <section th:replace="${content}"></section>
     </div>
 
     <!-- footer -->
-     <i>Footer</i>
-    
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <i>Footer</i>
+
+    <script th:src="@{'/js/script.js'}"></script>
+
+
+
+
+
 </body>
+
 </html>
