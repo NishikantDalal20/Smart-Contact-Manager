@@ -1,4 +1,4 @@
-package com.scm.scm20.services;
+package com.scm.scm20.services.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,17 +7,23 @@ import java.util.logging.Logger;
 
 import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.scm.scm20.entites.User;
+import com.scm.scm20.helpers.AppConstants;
 import com.scm.scm20.helpers.ResourceNotFoundException;
 import com.scm.scm20.repositories.userRepo;
+import com.scm.scm20.services.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
 
     @Autowired
     private userRepo userRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -28,6 +34,12 @@ public class UserServiceImpl implements UserService{
         String userId=UUID.randomUUID().toString();
         user.setUserId(userId);
 
+        //password encoding
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+
+        //set the user role
+        user.setRoleList(List.of(AppConstants.ROLE_USER));
 
         return userRepo.save(user);
     }

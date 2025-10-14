@@ -32,6 +32,11 @@ public class PageController {
     return "home";
   }
 
+  @RequestMapping("/")
+  public String defaultUrl() {
+    return "home";
+  }
+
   @RequestMapping("/about")
   public String about() {
     return "about";
