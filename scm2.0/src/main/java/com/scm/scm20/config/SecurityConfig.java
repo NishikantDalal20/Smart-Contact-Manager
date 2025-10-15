@@ -61,7 +61,24 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .requestMatchers("/user/**").authenticated() // Only authenticated users
             .anyRequest().permitAll() // Other URLs open
         )
-        .formLogin(org.springframework.security.config.Customizer.withDefaults()); // Optional, for APIs
+        .formLogin(form -> form
+            .loginPage("/login") // Custom login page
+            .loginProcessingUrl("/authenticate") // Form action URL
+            .successForwardUrl("/user/dashboard")
+            //.failureForwardUrl("/login?error=true")
+            .usernameParameter("email")
+            .passwordParameter("password")
+            
+        )
+        .logout(logout -> logout
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/login?logout=true")
+  
+            
+        )
+        .csrf(csrf -> csrf
+            .disable() // Disable CSRF for simplicity (not recommended for production)
+        );
 
     return http.build();
 }

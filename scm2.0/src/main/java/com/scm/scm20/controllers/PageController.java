@@ -34,7 +34,7 @@ public class PageController {
 
   @RequestMapping("/")
   public String defaultUrl() {
-    return "home";
+    return "redirect:/home";
   }
 
   @RequestMapping("/about")
