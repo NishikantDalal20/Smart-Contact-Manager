@@ -41,6 +41,10 @@ public class SecurityConfig {
 @Autowired
 private SecurityCustomUserDetailService userDetailsService;
 
+
+@Autowired
+private OAuthAuthenicationSuccessHandler  oAuthAuthenicationSuccessHandler;
+
 @Bean
 public AuthenticationProvider authenticationProvider(){
    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -78,6 +82,10 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         )
         .csrf(csrf -> csrf
             .disable() // Disable CSRF for simplicity (not recommended for production)
+        )
+        .oauth2Login(oauth2 -> oauth2
+            .loginPage("/login") // Custom login page for OAuth2
+            .successHandler(oAuthAuthenicationSuccessHandler) // Redirect after successful OAuth2 login
         );
 
     return http.build();
